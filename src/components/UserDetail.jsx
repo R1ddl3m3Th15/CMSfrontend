@@ -10,7 +10,7 @@ function UserDetail() {
       if (!userId) return;
 
       try {
-        const response = await axios.get('http://localhost:3001/admin/listusers');
+        const response = await axios.get('https://bffcms.onrender.com/admin/listusers');
         // Find the user details from the list of users
         const userDetail = response.data.find(user => user.userId === userId);
         setUserInfo(userDetail);

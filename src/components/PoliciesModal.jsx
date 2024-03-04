@@ -7,7 +7,7 @@ function PoliciesModal({ onClose, userId }) {
   const [submitResponse, setSubmitResponse] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3001/user/policies/all')
+    axios.get('https://bffcms.onrender.com/user/policies/all')
       .then(response => {
         setPolicies(response.data); // Adjust if your data structure is different
       })
@@ -32,7 +32,7 @@ function PoliciesModal({ onClose, userId }) {
       userId, // This should be the ID of the currently logged-in user
     };
 
-    axios.post('http://localhost:3001/user/policies/select', postData)
+    axios.post('https://bffcms.onrender.com/user/policies/select', postData)
       .then(response => {
         setSubmitResponse(response.data.message); // Assuming the response contains a message
       })

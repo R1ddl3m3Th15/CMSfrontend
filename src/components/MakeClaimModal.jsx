@@ -24,7 +24,7 @@ function MakeClaimModal({ onClose }) {
 
   const fetchUserDetails = async (userId) => {
   try {
-    const { data: users } = await axios.get('http://localhost:3001/admin/listusers');
+    const { data: users } = await axios.get('https://bffcms.onrender.com/admin/listusers');
     const user = users.find((u) => u.userId === userId);
     console.log(user); // Check the user object structure in the console
     setUserDetails(user || {});
@@ -33,7 +33,7 @@ function MakeClaimModal({ onClose }) {
     // If 'selectedPolicies' is an array of policyIds, you need another call to get the policy details
     if (user && user.selectedPolicies) {
       const policyDetailsRequests = user.selectedPolicies.map(policyId =>
-        axios.get(`http://localhost:3001/user/policies/${policyId}`)
+        axios.get(`https://bffcms.onrender.com/user/policies/${policyId}`)
       );
       const policyDetailsResponses = await Promise.all(policyDetailsRequests);
       const policyDetails = policyDetailsResponses.map(response => response.data);
@@ -64,7 +64,7 @@ function MakeClaimModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/user/claims/create', {
+      const response = await axios.post('https://bffcms.onrender.com/user/claims/create', {
         ...formData,
         // Include additional policy details if needed by the backend
         coverageAmt: selectedPolicyDetails.coverageAmt,

@@ -13,7 +13,7 @@ function MainContent() {
 
   const fetchClaimHistory = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3001/user/${userId}/claims/history`);
+      const response = await axios.get(`https://bffcms.onrender.com/user/${userId}/claims/history`);
       setClaimHistory(response.data);
     } catch (error) {
       console.error('Failed to fetch claim history:', error);
