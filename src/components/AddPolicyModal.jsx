@@ -22,7 +22,7 @@ function AddPolicyModal({ onClose }) {
     setSubmitResponse('');
 
     try {
-      const response = await axios.post('http://localhost:4000/admin/policies/add', formData);
+      const response = await axios.post('http://localhost:3001/admin/policies/add', formData);
       setSubmitResponse(response.data.message);
       // Reset form after successful submission
       setFormData({

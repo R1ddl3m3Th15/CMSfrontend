@@ -69,7 +69,7 @@ function AdminRegister() {
 
     if (!hasErrors) {
       // Send a POST request to the backend to register the user
-      axios.post('http://localhost:4000/admin/register', formData)
+      axios.post('http://localhost:3001/admin/register', formData)
         .then(response => {
           setIsRegistered(true);
           // Wait for 2 seconds before redirecting to the login page

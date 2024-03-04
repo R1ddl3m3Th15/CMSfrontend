@@ -9,7 +9,7 @@ function AllPoliciesModal({ onClose }) {
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/admin/policies/all');
+        const response = await axios.get('http://localhost:3001/admin/policies/all');
         setPolicies(response.data);
         // Prepare editedPolicies state
         const initialEditState = response.data.reduce((acc, policy) => ({
@@ -38,7 +38,7 @@ function AllPoliciesModal({ onClose }) {
     if (editingPolicyId === policyId) {
       // Submit updated policy
       try {
-        await axios.patch(`http://localhost:4000/admin/policies/${policyId}`, editedPolicies[policyId]);
+        await axios.patch(`http://localhost:3001/admin/policies/${policyId}`, editedPolicies[policyId]);
         setPolicies(prev => prev.map(policy => policy.policyId === policyId ? editedPolicies[policyId] : policy));
         setEditingPolicyId(null); // Exit editing mode
       } catch (error) {
@@ -52,7 +52,7 @@ function AllPoliciesModal({ onClose }) {
 
   const handleDelete = async (policyId) => {
     try {
-      await axios.delete(`http://localhost:4000/admin/policies/${policyId}`);
+      await axios.delete(`http://localhost:3001/admin/policies/${policyId}`);
       setPolicies(prev => prev.filter(policy => policy.policyId !== policyId));
     } catch (error) {
       console.error('Failed to delete policy:', error);

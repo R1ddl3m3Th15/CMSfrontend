@@ -15,7 +15,7 @@ function AdminMainContent() {
 
   const fetchPendingClaims = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/admin/claims/pending');
+      const response = await axios.get('http://localhost:3001/admin/claims/pending');
       setPendingClaims(response.data);
     } catch (error) {
       console.error('Failed to fetch pending claims:', error);
@@ -25,7 +25,7 @@ function AdminMainContent() {
 
   const fetchApprovedClaims = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/admin/claims/approved');
+    const response = await axios.get('http://localhost:3001/admin/claims/approved');
     setApprovedClaims(response.data);
   } catch (error) {
     console.error('Failed to fetch approved claims:', error);
@@ -35,7 +35,7 @@ function AdminMainContent() {
 
 const fetchRejectedClaims = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/admin/claims/rejected');
+        const response = await axios.get('http://localhost:3001/admin/claims/rejected');
         setRejectedClaims(response.data);
       } catch (error) {
         console.error('Failed to fetch rejected claims:', error);
@@ -45,7 +45,7 @@ const fetchRejectedClaims = async () => {
 
   const handleApprove = async (claimId) => {
     try {
-      const response = await axios.patch(`http://localhost:4000/admin/claims/${claimId}/approve`);
+      const response = await axios.patch(`http://localhost:3001/admin/claims/${claimId}/approve`);
       const updatedClaim = response.data.claim;
 
       // Add the updated claim to the approvedClaims array and filter it out from pendingClaims
@@ -66,7 +66,7 @@ const fetchRejectedClaims = async () => {
     }
 
     try {
-        const response = await axios.patch(`http://localhost:4000/admin/claims/${claimId}/reject`, { rejectionReason });
+        const response = await axios.patch(`http://localhost:3001/admin/claims/${claimId}/reject`, { rejectionReason });
         const updatedClaim = response.data.claim;
 
         // Optionally manage rejectedClaims state similar to approvedClaims if needed

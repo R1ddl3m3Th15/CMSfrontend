@@ -45,7 +45,7 @@ function AdminLogin() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    axios.post('http://localhost:4000/admin/login', formData)
+    axios.post('http://localhost:3001/admin/login', formData)
       .then(response => {
          // Assuming response.data.user contains the user object
         localStorage.setItem('adminId', response.data.admin.adminId); // Store adminId in localStorage

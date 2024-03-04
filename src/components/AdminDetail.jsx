@@ -15,7 +15,7 @@ function AdminDetail() {
       }
 
       try {
-        const response = await axios.get('http://localhost:4000/admin/listadmins');
+        const response = await axios.get('http://localhost:3001/admin/listadmins');
         console.log(response.data); // Log the response to see the data structure
         const adminDetail = response.data.find(admin => admin.adminId === adminId);
         if (!adminDetail) {
