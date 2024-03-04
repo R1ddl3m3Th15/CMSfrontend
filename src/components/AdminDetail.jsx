@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function AdminDetail() {
   const [adminInfo, setAdminInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchAdminInfo = async () => {
@@ -42,12 +46,8 @@ function AdminDetail() {
   }
 
   const handleLogout = () => {
-    // Clear the adminId from localStorage
     localStorage.removeItem('adminId');
-
-    // Optionally redirect to login page or home page
-    // This depends on your routing setup; adjust as necessary
-    window.location.href = '/admin/login';
+    navigate('/user/login');
   };
 
   return (

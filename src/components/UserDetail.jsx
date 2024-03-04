@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function UserDetail() {
   const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -31,13 +34,9 @@ function UserDetail() {
     return <div>Loading...</div>; // or any other loading state representation
   }
 
-  const handleLogout = () => {
-    // Clear the userId from localStorage
+ const handleLogout = () => {
     localStorage.removeItem('userId');
-
-    // Optionally redirect to login page or home page
-    // Adjust the redirection based on your app's routing
-    window.location.href = '/user/login';
+    navigate('/user/login');
   };
 
   return (
