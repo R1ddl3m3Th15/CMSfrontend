@@ -22,7 +22,9 @@ function AddPolicyModal({ onClose }) {
     setSubmitResponse('');
 
     try {
-      const response = await axios.post('https://bffcms.onrender.com/admin/policies/add', formData);
+      const response = await axios.post('https://cmsbackendnew.onrender.com/admin/policies/add', formData, {
+        headers: { 'x-api-key': process.env.REACT_APP_API_KEY }
+      });
       setSubmitResponse(response.data.message);
       // Reset form after successful submission
       setFormData({

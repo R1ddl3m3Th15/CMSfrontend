@@ -8,13 +8,17 @@ function UserDetail() {
     const fetchUserInfo = async () => {
       const userId = localStorage.getItem('userId'); // Replace with your actual logic for getting the logged-in user's ID
       if (!userId) return;
-
       try {
-        const response = await axios.get('https://bffcms.onrender.com/admin/listusers');
-        // Find the user details from the list of users
+        const response = await axios.get('https://cmsbackendnew.onrender.com/admin/listusers', {
+          headers: {
+            // Include the API key in the request headers
+            'x-api-key': process.env.REACT_APP_API_KEY,
+          },
+        });
         const userDetail = response.data.find(user => user.userId === userId);
         setUserInfo(userDetail);
-      } catch (error) {
+      }
+       catch (error) {
         console.error('Error fetching user details:', error);
         // Handle error state appropriately
       }

@@ -69,12 +69,12 @@ function AdminRegister() {
 
     if (!hasErrors) {
       // Send a POST request to the backend to register the user
-      axios.post('https://bffcms.onrender.com/admin/register', formData)
+      axios.post('https://cmsbackendnew.onrender.com/admin/register', formData)
         .then(response => {
           setIsRegistered(true);
           // Wait for 2 seconds before redirecting to the login page
           setTimeout(() => {
-            navigate('/user/login');
+            navigate('/admin/login');
           }, 3000);
         })
         .catch(error => {

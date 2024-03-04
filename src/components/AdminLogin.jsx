@@ -45,7 +45,7 @@ function AdminLogin() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    axios.post('https://bffcms.onrender.com/admin/login', formData)
+    axios.post('https://cmsbackendnew.onrender.com/admin/login', formData)
       .then(response => {
          // Assuming response.data.user contains the user object
         localStorage.setItem('adminId', response.data.admin.adminId); // Store adminId in localStorage

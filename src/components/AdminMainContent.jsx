@@ -13,9 +13,13 @@ function AdminMainContent() {
     fetchRejectedClaims();
   }, []);
 
+   const apiOptions = {
+    headers: { 'x-api-key': process.env.REACT_APP_API_KEY }
+  };
+
   const fetchPendingClaims = async () => {
     try {
-      const response = await axios.get('https://bffcms.onrender.com/admin/claims/pending');
+      const response = await axios.get('https://cmsbackendnew.onrender.com/admin/claims/pending', apiOptions);
       setPendingClaims(response.data);
     } catch (error) {
       console.error('Failed to fetch pending claims:', error);
@@ -25,7 +29,7 @@ function AdminMainContent() {
 
   const fetchApprovedClaims = async () => {
   try {
-    const response = await axios.get('https://bffcms.onrender.com/admin/claims/approved');
+    const response = await axios.get('https://cmsbackendnew.onrender.com/admin/claims/approved', apiOptions);
     setApprovedClaims(response.data);
   } catch (error) {
     console.error('Failed to fetch approved claims:', error);
@@ -35,7 +39,7 @@ function AdminMainContent() {
 
 const fetchRejectedClaims = async () => {
       try {
-        const response = await axios.get('https://bffcms.onrender.com/admin/claims/rejected');
+        const response = await axios.get('https://cmsbackendnew.onrender.com/admin/claims/rejected', apiOptions);
         setRejectedClaims(response.data);
       } catch (error) {
         console.error('Failed to fetch rejected claims:', error);
@@ -45,7 +49,7 @@ const fetchRejectedClaims = async () => {
 
   const handleApprove = async (claimId) => {
     try {
-      const response = await axios.patch(`https://bffcms.onrender.com/admin/claims/${claimId}/approve`);
+      const response = await axios.patch(`https://cmsbackendnew.onrender.com/admin/claims/${claimId}/approve`, {}, apiOptions);
       const updatedClaim = response.data.claim;
 
       // Add the updated claim to the approvedClaims array and filter it out from pendingClaims
@@ -66,7 +70,7 @@ const fetchRejectedClaims = async () => {
     }
 
     try {
-        const response = await axios.patch(`https://bffcms.onrender.com/admin/claims/${claimId}/reject`, { rejectionReason });
+        const response = await axios.patch(`https://cmsbackendnew.onrender.com/admin/claims/${claimId}/reject`, { rejectionReason }, apiOptions);
         const updatedClaim = response.data.claim;
 
         // Optionally manage rejectedClaims state similar to approvedClaims if needed

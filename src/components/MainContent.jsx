@@ -13,7 +13,9 @@ function MainContent() {
 
   const fetchClaimHistory = async (userId) => {
     try {
-      const response = await axios.get(`https://bffcms.onrender.com/user/${userId}/claims/history`);
+      const response = await axios.get(`https://cmsbackendnew.onrender.com/user/${userId}/claims/history`, {
+      headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+    });
       setClaimHistory(response.data);
     } catch (error) {
       console.error('Failed to fetch claim history:', error);

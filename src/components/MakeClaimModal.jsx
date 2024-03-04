@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function MakeClaimModal({ onClose }) {
@@ -15,34 +15,41 @@ function MakeClaimModal({ onClose }) {
   const [formErrors, setFormErrors] = useState({});
   const [submitResponse, setSubmitResponse] = useState('');
 
-  const fetchUserDetails = useCallback(async (userId) => {
-    try {
-      const { data: users } = await axios.get('https://bffcms.onrender.com/admin/listusers');
-      const user = users.find((u) => u.userId === userId);
-      setUserDetails(user || {});
-
-      if (user && user.selectedPolicies) {
-        const policyDetailsRequests = user.selectedPolicies.map(policyId =>
-          axios.get(`https://bffcms.onrender.com/user/policies/${policyId}`)
-        );
-        const policyDetailsResponses = await Promise.all(policyDetailsRequests);
-        const policyDetails = policyDetailsResponses.map(response => response.data);
-        setPolicies(policyDetails);
-      } else {
-        console.error('Selected policies are not available');
-      }
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-      setFormErrors({ ...formErrors, fetch: 'Failed to fetch user details.' });
-    }
-  }, [formErrors]);
-
   useEffect(() => {
     const userId = formData.userId;
     if (userId) {
       fetchUserDetails(userId);
     }
-  }, [formData.userId, fetchUserDetails]);
+  }, [formData.userId]);
+
+  const fetchUserDetails = async (userId) => {
+  try {
+    const { data: users } = await axios.get('https://cmsbackendnew.onrender.com/admin/listusers', {
+        headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+      });
+    const user = users.find((u) => u.userId === userId);
+    console.log(user); // Check the user object structure in the console
+    setUserDetails(user || {});
+
+    // Assuming user object contains a 'selectedPolicies' array
+    // If 'selectedPolicies' is an array of policyIds, you need another call to get the policy details
+    if (user && user.selectedPolicies) {
+      const policyDetailsRequests = user.selectedPolicies.map(policyId =>
+         axios.get(`https://cmsbackendnew.onrender.com/user/policies/${policyId}`, {
+          headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+        })
+      );
+      const policyDetailsResponses = await Promise.all(policyDetailsRequests);
+      const policyDetails = policyDetailsResponses.map(response => response.data);
+      setPolicies(policyDetails);
+    } else {
+      console.error('Selected policies are not available');
+    }
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    setFormErrors({ ...formErrors, fetch: 'Failed to fetch user details.' });
+  }
+};
 
   const handlePolicyChange = (e) => {
     const policyId = e.target.value;
@@ -61,11 +68,16 @@ function MakeClaimModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://bffcms.onrender.com/user/claims/create', {
+      const response = await axios.post('https://cmsbackendnew.onrender.com/user/claims/create', 
+      {
         ...formData,
         // Include additional policy details if needed by the backend
         coverageAmt: selectedPolicyDetails.coverageAmt,
-      });
+      }, 
+      {
+        headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+      }
+    );
       setSubmitResponse(response.data.message);
     } catch (error) {
       setFormErrors({ form: error.response.data.message || 'An error occurred during claim submission.' });

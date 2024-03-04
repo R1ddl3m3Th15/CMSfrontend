@@ -7,7 +7,9 @@ function ListUsersModal({ onClose }) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('https://bffcms.onrender.com/admin/listusers');
+        const response = await axios.get('https://cmsbackendnew.onrender.com/admin/listusers', {
+      headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+    });
         setUsers(response.data);
       } catch (error) {
         console.error('Failed to fetch users:', error);
@@ -25,7 +27,9 @@ function ListUsersModal({ onClose }) {
       return; // Stop if the user cancels the action
     }
 
-    await axios.delete(`https://bffcms.onrender.com/admin/users/${userId}`);
+    await axios.delete(`https://cmsbackendnew.onrender.com/admin/users/${userId}`, {
+      headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+    });
     // Filter out the deleted user from the current state to update the UI
     setUsers(users.filter(user => user.userId !== userId));
     alert("User deleted successfully."); // Optional: show a success message

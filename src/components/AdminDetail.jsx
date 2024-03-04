@@ -15,7 +15,9 @@ function AdminDetail() {
       }
 
       try {
-        const response = await axios.get('https://bffcms.onrender.com/admin/listadmins');
+        const response = await axios.get('https://cmsbackendnew.onrender.com/admin/listadmins', {
+          headers: { 'x-api-key': process.env.REACT_APP_API_KEY }
+        });
         console.log(response.data); // Log the response to see the data structure
         const adminDetail = response.data.find(admin => admin.adminId === adminId);
         if (!adminDetail) {

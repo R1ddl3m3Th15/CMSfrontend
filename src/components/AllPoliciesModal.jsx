@@ -9,7 +9,9 @@ function AllPoliciesModal({ onClose }) {
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const response = await axios.get('https://bffcms.onrender.com/admin/policies/all');
+        const response = await axios.get('https://cmsbackendnew.onrender.com/admin/policies/all', {
+          headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+        });
         setPolicies(response.data);
         // Prepare editedPolicies state
         const initialEditState = response.data.reduce((acc, policy) => ({
@@ -38,7 +40,9 @@ function AllPoliciesModal({ onClose }) {
     if (editingPolicyId === policyId) {
       // Submit updated policy
       try {
-        await axios.patch(`https://bffcms.onrender.com/admin/policies/${policyId}`, editedPolicies[policyId]);
+        await axios.patch(`https://cmsbackendnew.onrender.com/admin/policies/${policyId}`, editedPolicies[policyId], {
+          headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+        });
         setPolicies(prev => prev.map(policy => policy.policyId === policyId ? editedPolicies[policyId] : policy));
         setEditingPolicyId(null); // Exit editing mode
       } catch (error) {
@@ -52,7 +56,9 @@ function AllPoliciesModal({ onClose }) {
 
   const handleDelete = async (policyId) => {
     try {
-      await axios.delete(`https://bffcms.onrender.com/admin/policies/${policyId}`);
+      await axios.delete(`https://cmsbackendnew.onrender.com/admin/policies/${policyId}`, {
+        headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
+      });
       setPolicies(prev => prev.filter(policy => policy.policyId !== policyId));
     } catch (error) {
       console.error('Failed to delete policy:', error);
